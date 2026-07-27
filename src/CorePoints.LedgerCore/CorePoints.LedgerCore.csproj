@@ -2,24 +2,20 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <RootNamespace>CorePoints.OutboxWorker</RootNamespace>
-    <PackageId>CorePoints.OutboxWorker</PackageId>
-    <Description>CorePoints shared library - Transactional outbox pattern worker for reliable event publishing</Description>
-    <Authors>eadelungue</Authors>
-    <RepositoryUrl>https://github.com/eadelungue/corepoints-shared-libraries</RepositoryUrl>
-    <IsPackable>true</IsPackable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>CorePoints.LedgerCore</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.1.*" />
     <PackageReference Include="Npgsql" Version="8.0.*" />
-    <PackageReference Include="AWSSDK.SimpleNotificationService" Version="3.*" />
+    <PackageReference Include="StackExchange.Redis" Version="2.7.*" />
     <PackageReference Include="Microsoft.Extensions.Http.Resilience" Version="8.0.*" />
     <PackageReference Include="Serilog.AspNetCore" Version="8.0.*" />
     <PackageReference Include="Serilog.Sinks.Console" Version="5.0.*" />
     <PackageReference Include="Serilog.Formatting.Compact" Version="2.0.*" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.*" />
   </ItemGroup>
 
 </Project>

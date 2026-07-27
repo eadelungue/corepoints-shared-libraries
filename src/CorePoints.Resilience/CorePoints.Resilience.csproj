@@ -5,6 +5,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>CorePoints.Resilience</RootNamespace>
+    <PackageId>CorePoints.Resilience</PackageId>
+    <Description>CorePoints shared library - Resilience patterns (retry, circuit breaker, health checks)</Description>
+    <Authors>eadelungue</Authors>
+    <RepositoryUrl>https://github.com/eadelungue/corepoints-shared-libraries</RepositoryUrl>
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>

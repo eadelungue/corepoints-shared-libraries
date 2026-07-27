@@ -5,6 +5,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>CorePoints.FeatureToggles</RootNamespace>
+    <PackageId>CorePoints.FeatureToggles</PackageId>
+    <Description>CorePoints shared library - Feature toggle management with database-backed storage</Description>
+    <Authors>eadelungue</Authors>
+    <RepositoryUrl>https://github.com/eadelungue/corepoints-shared-libraries</RepositoryUrl>
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>

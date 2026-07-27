@@ -6,6 +6,11 @@
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);1591</NoWarn>
+    <PackageId>CorePoints.ApiGateway</PackageId>
+    <Description>CorePoints shared library - API Gateway patterns (versioning, Swagger, middleware, exception handling)</Description>
+    <Authors>eadelungue</Authors>
+    <RepositoryUrl>https://github.com/eadelungue/corepoints-shared-libraries</RepositoryUrl>
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>

@@ -5,6 +5,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>CorePoints.Caching</RootNamespace>
+    <PackageId>CorePoints.Caching</PackageId>
+    <Description>CorePoints shared library - Distributed caching with Redis and SSM integration</Description>
+    <Authors>eadelungue</Authors>
+    <RepositoryUrl>https://github.com/eadelungue/corepoints-shared-libraries</RepositoryUrl>
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>

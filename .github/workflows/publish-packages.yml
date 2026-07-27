@@ -1,0 +1,50 @@
+name: "Publish NuGet Packages"
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  NUGET_SOURCE: https://nuget.pkg.github.com/eadelungue/index.json
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Build all libraries
+        run: |
+          dotnet build src/CorePoints.Resilience -c Release
+          dotnet build src/CorePoints.Caching -c Release
+          dotnet build src/CorePoints.FeatureToggles -c Release
+          dotnet build src/CorePoints.ApiGateway -c Release
+          dotnet build src/CorePoints.OutboxWorker -c Release
+
+      - name: Pack NuGet packages
+        run: |
+          VERSION="1.0.0-${GITHUB_SHA::7}"
+          dotnet pack src/CorePoints.Resilience -c Release -o ./nupkgs /p:Version=$VERSION --no-build
+          dotnet pack src/CorePoints.Caching -c Release -o ./nupkgs /p:Version=$VERSION --no-build
+          dotnet pack src/CorePoints.FeatureToggles -c Release -o ./nupkgs /p:Version=$VERSION --no-build
+          dotnet pack src/CorePoints.ApiGateway -c Release -o ./nupkgs /p:Version=$VERSION --no-build
+          dotnet pack src/CorePoints.OutboxWorker -c Release -o ./nupkgs /p:Version=$VERSION --no-build
+
+      - name: Push to GitHub Packages
+        run: |
+          dotnet nuget push "./nupkgs/*.nupkg" \
+            --source ${{ env.NUGET_SOURCE }} \
+            --api-key ${{ secrets.GITHUB_TOKEN }} \
+            --skip-duplicate
