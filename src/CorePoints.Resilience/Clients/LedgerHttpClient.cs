@@ -83,6 +83,57 @@ public sealed class LedgerHttpClient : ILedgerClient
         return await _httpClient.SendAsync(httpRequest, cancellationToken);
     }
 
+    public async Task<HttpResponseMessage> GetTitularByDocumentoAsync(
+        string documento,
+        string correlationId,
+        CancellationToken cancellationToken = default)
+    {
+        using var httpRequest = new HttpRequestMessage(HttpMethod.Get, $"/titulares?documento={documento}");
+        AttachHeaders(httpRequest, idempotencyKey: null, correlationId);
+
+        _logger.LogDebug(
+            "Getting titular by documento from Ledger. CorrelationId={CorrelationId}",
+            correlationId);
+
+        return await _httpClient.SendAsync(httpRequest, cancellationToken);
+    }
+
+    public async Task<HttpResponseMessage> PostTitularAsync(
+        object request,
+        string correlationId,
+        CancellationToken cancellationToken = default)
+    {
+        using var httpRequest = new HttpRequestMessage(HttpMethod.Post, "/titulares")
+        {
+            Content = JsonContent.Create(request)
+        };
+        AttachHeaders(httpRequest, idempotencyKey: null, correlationId);
+
+        _logger.LogDebug(
+            "Posting titular to Ledger. CorrelationId={CorrelationId}",
+            correlationId);
+
+        return await _httpClient.SendAsync(httpRequest, cancellationToken);
+    }
+
+    public async Task<HttpResponseMessage> PostContaAsync(
+        object request,
+        string correlationId,
+        CancellationToken cancellationToken = default)
+    {
+        using var httpRequest = new HttpRequestMessage(HttpMethod.Post, "/contas")
+        {
+            Content = JsonContent.Create(request)
+        };
+        AttachHeaders(httpRequest, idempotencyKey: null, correlationId);
+
+        _logger.LogDebug(
+            "Posting conta to Ledger. CorrelationId={CorrelationId}",
+            correlationId);
+
+        return await _httpClient.SendAsync(httpRequest, cancellationToken);
+    }
+
     private static void AttachHeaders(HttpRequestMessage request, string? idempotencyKey, string correlationId)
     {
         if (!string.IsNullOrEmpty(idempotencyKey))

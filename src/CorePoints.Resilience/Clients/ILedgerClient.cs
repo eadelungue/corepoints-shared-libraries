@@ -40,4 +40,28 @@ public interface ILedgerClient
         string transactionId,
         string correlationId,
         CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Verifica se um titular com o documento informado já existe.
+    /// </summary>
+    Task<HttpResponseMessage> GetTitularByDocumentoAsync(
+        string documento,
+        string correlationId,
+        CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Cria um novo Titular no Ledger.
+    /// </summary>
+    Task<HttpResponseMessage> PostTitularAsync(
+        object request,
+        string correlationId,
+        CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Cria uma nova Conta no Ledger associada a um Titular.
+    /// </summary>
+    Task<HttpResponseMessage> PostContaAsync(
+        object request,
+        string correlationId,
+        CancellationToken cancellationToken = default);
 }
