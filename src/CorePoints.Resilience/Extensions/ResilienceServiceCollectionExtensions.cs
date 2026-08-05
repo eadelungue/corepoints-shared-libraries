@@ -54,6 +54,10 @@ public static class ResilienceServiceCollectionExtensions
             var options = context.ServiceProvider
                 .GetRequiredService<IOptions<LedgerResilienceOptions>>().Value;
 
+            var attemptTimeout = options.AttemptTimeout > TimeSpan.Zero
+                ? options.AttemptTimeout
+                : TimeSpan.FromSeconds(10);
+
             // Fallback (outermost - catches all failures)
             builder.AddFallback(new FallbackStrategyOptions<HttpResponseMessage>
             {
@@ -123,7 +127,7 @@ public static class ResilienceServiceCollectionExtensions
             });
 
             // Attempt Timeout (innermost)
-            builder.AddTimeout(options.AttemptTimeout);
+            builder.AddTimeout(attemptTimeout);
         });
 
         // Register External named HttpClient with resilience pipeline
@@ -140,6 +144,13 @@ public static class ResilienceServiceCollectionExtensions
         {
             var options = context.ServiceProvider
                 .GetRequiredService<IOptions<ExternalResilienceOptions>>().Value;
+
+            var attemptTimeout = options.AttemptTimeout > TimeSpan.Zero
+                ? options.AttemptTimeout
+                : TimeSpan.FromSeconds(15);
+            var totalTimeout = options.TotalTimeout > TimeSpan.Zero
+                ? options.TotalTimeout
+                : TimeSpan.FromSeconds(30);
 
             // Fallback (outermost)
             builder.AddFallback(new FallbackStrategyOptions<HttpResponseMessage>
@@ -178,7 +189,7 @@ public static class ResilienceServiceCollectionExtensions
             });
 
             // Total Timeout (across all retries)
-            builder.AddTimeout(options.TotalTimeout);
+            builder.AddTimeout(totalTimeout);
 
             // Retry with exponential backoff + jitter
             builder.AddRetry(new HttpRetryStrategyOptions
@@ -213,7 +224,7 @@ public static class ResilienceServiceCollectionExtensions
             });
 
             // Attempt Timeout (innermost)
-            builder.AddTimeout(options.AttemptTimeout);
+            builder.AddTimeout(attemptTimeout);
         });
 
         // Register typed Ledger client

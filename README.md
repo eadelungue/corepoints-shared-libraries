@@ -1,6 +1,7 @@
 # CorePoints Shared Libraries
 
-Bibliotecas compartilhadas do projeto CorePoints, seguindo os padrões de governança definidos em `architecture-governance/`.
+## Governança Técnica
+Este serviço segue as normas definidas no repositório ../architecture-governance/ 
 
 ## Estrutura
 

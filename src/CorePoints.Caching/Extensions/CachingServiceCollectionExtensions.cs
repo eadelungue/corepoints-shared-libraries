@@ -47,6 +47,7 @@ public static class CachingServiceCollectionExtensions
         {
             var options = context.ServiceProvider.GetRequiredService<IOptions<CacheOptions>>().Value;
             var logger = context.ServiceProvider.GetRequiredService<ILogger<RedisCacheService>>();
+            var syncTimeoutMs = Math.Max(1500, options.SyncTimeoutMs);
 
             builder.AddCircuitBreaker(new CircuitBreakerStrategyOptions
             {
@@ -75,7 +76,7 @@ public static class CachingServiceCollectionExtensions
                 }
             });
 
-            builder.AddTimeout(TimeSpan.FromMilliseconds(options.SyncTimeoutMs));
+            builder.AddTimeout(TimeSpan.FromMilliseconds(syncTimeoutMs));
         });
 
         // Register ICacheService
